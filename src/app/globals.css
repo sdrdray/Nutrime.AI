@@ -1,0 +1,113 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+body {
+  font-family: var(--font-geist-sans), Arial, Helvetica, sans-serif;
+}
+
+@layer base {
+  :root {
+    --background: 35 60% 96%; /* Soft Peach White */
+    --foreground: 220 30% 25%; /* Dark Slate Blue */
+
+    --card: 35 70% 98%; /* Very Light Peach */
+    --card-foreground: 220 30% 25%; /* Dark Slate Blue */
+
+    --popover: 35 70% 98%; /* Very Light Peach */
+    --popover-foreground: 220 30% 25%; /* Dark Slate Blue */
+
+    --primary: 145 60% 35%; /* Rich Green */
+    --primary-foreground: 145 20% 95%; /* Light Greenish White */
+
+    --secondary: 25 65% 70%; /* Soft Terracotta */
+    --secondary-foreground: 25 30% 20%; /* Dark Brown */
+
+    --muted: 35 60% 92%; /* Lighter Peach */
+    --muted-foreground: 220 25% 55%; /* Muted Slate Blue */
+
+    --accent: 40 90% 55%; /* Bright Orange */
+    --accent-foreground: 40 30% 15%; /* Dark Orange Brown */
+
+    --destructive: 0 84.2% 60.2%;
+    --destructive-foreground: 0 0% 98%;
+
+    --border: 35 50% 88%; /* Peach Border */
+    --input: 35 60% 94%; /* Light Peach Input */
+    --ring: 145 60% 45%; /* Brighter Rich Green for Ring */
+
+    --radius: 0.5rem;
+
+    /* Sidebar Specific Colors */
+    --sidebar-background: 210 40% 20%; /* Deep Calming Blue */
+    --sidebar-foreground: 210 30% 90%; /* Light Blueish White */
+    
+    --sidebar-primary: 40 90% 55%; /* Bright Orange (Accent) for active items */
+    --sidebar-primary-foreground: 40 30% 15%; /* Dark Orange Brown for active item text */
+    
+    --sidebar-accent: 210 40% 28%; /* Slightly Lighter Deep Blue for hover */
+    --sidebar-accent-foreground: 210 30% 95%; /* Lighter Blueish White for hover text */
+    
+    --sidebar-border: 210 40% 35%; /* Border for sidebar elements if needed */
+    --sidebar-ring: 40 90% 60%; /* Ring for focus, using accent */
+
+    --chart-1: 145 60% 45%;
+    --chart-2: 40 90% 60%;
+    --chart-3: 25 65% 60%;
+    --chart-4: 210 50% 50%;
+    --chart-5: 30 70% 70%;
+  }
+
+  .dark {
+    --background: 220 30% 10%; /* Dark Blue-Gray */
+    --foreground: 35 50% 90%; /* Light Peach */
+
+    --card: 220 30% 15%; /* Darker Blue-Gray */
+    --card-foreground: 35 50% 90%; /* Light Peach */
+
+    --popover: 220 30% 15%; /* Darker Blue-Gray */
+    --popover-foreground: 35 50% 90%; /* Light Peach */
+
+    --primary: 145 55% 45%; /* Rich Green (Dark Mode) */
+    --primary-foreground: 145 15% 92%; /* Lighter Greenish White */
+
+    --secondary: 25 60% 60%; /* Soft Terracotta (Dark Mode) */
+    --secondary-foreground: 25 25% 15%; /* Darker Brown */
+
+    --muted: 220 30% 20%; /* Muted Dark Blue-Gray */
+    --muted-foreground: 35 40% 70%; /* Muted Light Peach */
+
+    --accent: 40 85% 60%; /* Bright Orange (Dark Mode) */
+    --accent-foreground: 40 25% 10%; /* Darker Orange Brown */
+
+    --destructive: 0 70% 50%;
+    --destructive-foreground: 0 0% 95%;
+
+    --border: 220 30% 25%; /* Border Dark Blue-Gray */
+    --input: 220 30% 22%; /* Input Dark Blue-Gray */
+    --ring: 145 55% 50%; /* Brighter Rich Green for Ring (Dark Mode) */
+    
+    /* Sidebar Specific Colors - Dark Mode */
+    --sidebar-background: 220 25% 12%; /* Very Dark Blue */
+    --sidebar-foreground: 210 30% 85%; /* Muted Light Blueish White */
+    
+    --sidebar-primary: 40 85% 60%; /* Bright Orange (Accent) for active items */
+    --sidebar-primary-foreground: 40 25% 10%; /* Dark Orange Brown for active item text */
+    
+    --sidebar-accent: 220 25% 20%; /* Slightly Lighter Very Dark Blue for hover */
+    --sidebar-accent-foreground: 210 30% 90%; /* Lighter Blueish White for hover text */
+    
+    --sidebar-border: 220 25% 25%; /* Border for sidebar elements if needed */
+    --sidebar-ring: 40 85% 65%; /* Ring for focus, using accent */
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+  body {
+    @apply bg-background text-foreground;
+    min-height: 100vh;
+  }
+}

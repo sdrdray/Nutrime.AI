@@ -1,0 +1,88 @@
+rules_version = '2';
+
+service cloud.firestore {
+  match /databases/{database}/documents {
+
+    // Users Collection (Optional, but good for profiles)
+    // match /users/{userId} {
+    //   allow read: if request.auth != null;
+    //   allow create: if request.auth != null && request.auth.uid == userId; // User can create their own profile
+    //   allow update: if request.auth != null && request.auth.uid == userId; // User can update their own profile
+    //   // No delete for now, or make it specific
+    // }
+
+    // Meal Logs
+    match /mealLogs/{logId} {
+      allow read, update, delete: if request.auth != null && request.auth.uid == resource.data.userId;
+      allow create: if request.auth != null && request.auth.uid == request.resource.data.userId;
+    }
+
+    // Pantry Items
+    match /pantryItems/{itemId} {
+      allow read, update, delete: if request.auth != null && request.auth.uid == resource.data.userId;
+      allow create: if request.auth != null && request.auth.uid == request.resource.data.userId;
+    }
+
+    // Grocery Items
+    match /groceryItems/{itemId} {
+      allow read, update, delete: if request.auth != null && request.auth.uid == resource.data.userId;
+      allow create: if request.auth != null && request.auth.uid == request.resource.data.userId;
+    }
+    
+    // User Meal Plans (from Meal Planner page)
+    match /userMealPlans/{planId} {
+      allow read, update, delete: if request.auth != null && request.auth.uid == resource.data.userId;
+      allow create: if request.auth != null && request.auth.uid == request.resource.data.userId;
+    }
+
+    // User Saved AI Recipes (from Recipes page)
+    match /userSavedAiRecipes/{recipeId} {
+      allow read, update, delete: if request.auth != null && request.auth.uid == resource.data.userId;
+      allow create: if request.auth != null && request.auth.uid == request.resource.data.userId;
+    }
+    
+    // User Saved Fridge Recipes (from My Fridge page)
+    match /userSavedFridgeRecipes/{recipeId} {
+      allow read, update, delete: if request.auth != null && request.auth.uid == resource.data.userId;
+      allow create: if request.auth != null && request.auth.uid == request.resource.data.userId;
+    }
+
+    // Fridge Inventory (Simplified as a single document per user for now, or could be a subcollection)
+    // If FRIDGE_DOC_PATH = `userFridges/${userId}` then:
+    match /userFridges/{userId} {
+       allow read, write: if request.auth != null && request.auth.uid == userId;
+    }
+    // If FRIDGE_DOC_PATH = "userFridges/globalFridge" and items within it are user-scoped,
+    // this would require more complex field-level validation or a different structure.
+    // For a simple start, if "globalFridge" holds items like { items: [], userId: "uid" },
+    // then rules would need to check that userId field.
+    // But the current code seems to use one global doc `userFridges/globalFridge` which is not ideal for multi-user.
+    // Recommendation: Change `FRIDGE_DOC_PATH` in `my-fridge/page.tsx` to be user-specific, e.g., `userFridges/${user.uid}`.
+    // Then the rule above (`match /userFridges/{userId}`) would apply.
+    // For now, if it's truly a single global document shared, it's problematic for security.
+    // Let's assume it will be refactored to `userFridges/{userId}`:
+    // match /userFridges/{userId} {
+    //  allow read, write: if request.auth != null && request.auth.uid == userId;
+    // }
+    // If you keep "userFridges/globalFridge" and want anyone logged in to edit it (not recommended for user data):
+    // match /userFridges/globalFridge {
+    //   allow read, write: if request.auth != null;
+    // }
+
+
+    // Community Content (Example - needs detailed thought based on specific implementation)
+    // If community recipes are in a "communityRecipes" collection and each has a "authorId"
+    // match /communityRecipes/{recipeId} {
+    //   allow read: if request.auth != null; // Anyone logged in can read
+    //   allow create: if request.auth != null && request.auth.uid == request.resource.data.authorId;
+    //   allow update: if request.auth != null && request.auth.uid == resource.data.authorId; // Only author can update
+    //   // Deletes might be restricted or require admin/moderator roles
+    // }
+    // Comments, votes, etc. would have their own rules.
+
+    // Default deny all other access
+    match /{document=**} {
+      allow read, write: if false;
+    }
+  }
+}
